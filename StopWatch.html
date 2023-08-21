@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stopwatch</title>
+</head>
+<body>
+    <h1 style="margin-left:45%;">Stopwatch</h1>
+    <p style="margin-left:48%;" id="display">00:00:00</p>
+    <button style="margin-left:45%;" id="startButton">Start</button>
+    <button  id="stopButton">Stop</button>
+    <button id="resetButton">Reset</button>
+
+    <script>
+        let startTime = 0;
+        let interval;
+
+        function updateDisplay() {
+            const currentTime = new Date().getTime();
+            const elapsedTime = new Date(currentTime - startTime);
+            const hours = elapsedTime.getUTCHours().toString().padStart(2, '0');
+            const minutes = elapsedTime.getUTCMinutes().toString().padStart(2, '0');
+            const seconds = elapsedTime.getUTCSeconds().toString().padStart(2, '0');
+            document.getElementById("display").textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        document.getElementById("startButton").addEventListener("click", () => {
+            startTime = new Date().getTime();
+            interval = setInterval(updateDisplay, 1000);
+        });
+
+        document.getElementById("stopButton").addEventListener("click", () => {
+            clearInterval(interval);
+        });
+
+        document.getElementById("resetButton").addEventListener("click", () => {
+            clearInterval(interval);
+            startTime = 0;
+            document.getElementById("display").textContent = "00:00:00";
+        });
+    </script>
+</body>
+</html>
